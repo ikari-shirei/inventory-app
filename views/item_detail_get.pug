@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1= item.year + ' ' + item.name + ' ' + item.model
+  hr
+  div
+    div
+      h2= 'Description: '
+      p= item.description || 'This item has no description'
+    div
+      h2= 'Category: ' 
+      a(href='/categories/' + item.category._id)= item.category.name
+    div
+      h2= 'Number in stock: ' 
+      p= item.number_in_stock
+    div
+      h2= 'Price: ' 
+      p= '$' + item.price
+    
+  div
+      h4 
+        a(href='/') Go home
+      

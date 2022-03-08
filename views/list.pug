@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1= title
+  
+  if title == 'All items'
+    ul
+    each val in results
+      li
+        div
+          a(href=val.url)= val.name + ' ' + val.model
+          p= 'Year:' + val.year
+          p= 'Price: $' + val.price 
+  else
+
+    ul
+    each val in results
+      li
+        div
+          a(href=val.url)= val.name
+  
+  div
+      h4 
+        a(href='/') Go home
+        
+

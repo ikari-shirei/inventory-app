@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= category.name
+  
+  h4 This category has the items listed below
+  ul
+  each val in items
+    li
+      div
+        a(href=val.url)= val.name + ' ' + val.model
+        p= 'Year:' + val.year
+        p= 'Price: $' + val.price
+  
+  div
+      h4 
+        a(href='/') Go home

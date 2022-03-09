@@ -90,3 +90,14 @@ exports.category_delete_get = function (req, res, next) {
     res.render('category_delete', { category: category })
   })
 }
+
+// Get category delete
+exports.category_delete_post = function (req, res, next) {
+  Category.findByIdAndRemove(req.params.id, function (err) {
+    if (err) {
+      return next(err)
+    }
+
+    res.redirect('/categories')
+  })
+}

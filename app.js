@@ -6,8 +6,10 @@ var logger = require('morgan')
 require('dotenv').config()
 
 var indexRouter = require('./routes/index')
+var postRoutes = require('./routes/postRoutes')
 
 var app = express()
+const basicAuth = require('express-basic-auth')
 
 // Database connection
 const mongoose = require('mongoose')
@@ -33,6 +35,16 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
+
+// Basic auth
+app.use(
+  basicAuth({
+    users: { admin: process.env.PASSWORD },
+    challenge: true,
+  })
+)
+
+app.use('/', postRoutes)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

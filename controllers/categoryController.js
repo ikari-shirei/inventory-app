@@ -2,6 +2,8 @@ var Category = require('../models/category')
 var Item = require('../models/item')
 var async = require('async')
 
+const { body, validationResult } = require('express-validator')
+
 // Get categories list
 exports.category_list_get = function (req, res, next) {
   Category.find().exec(function (err, results) {
@@ -44,3 +46,36 @@ exports.category_detail_get = function (req, res, next) {
 exports.category_create_get = function (req, res, next) {
   res.render('category_form', {})
 }
+
+// Post create category
+exports.category_create_post = [
+  body('name', 'Name must not be empty.').trim().isLength({ min: 1 }).escape(),
+  body('Description').optional({ checkFalsy: true }).escape(),
+
+  function (req, res, next) {
+    const errors = validationResult(req)
+
+    const category = new Category({
+      name: req.body.name,
+      description: req.body.description,
+    })
+
+    if (!errors.isEmpty()) {
+      // There are errors
+      res.render('category_form', {
+        category: category,
+        errors: errors.array(),
+      })
+      return
+    } else {
+      category.save(function (err) {
+        if (err) {
+          return next(err)
+        }
+
+        //Successful, return category
+        res.redirect(category.url)
+      })
+    }
+  },
+]

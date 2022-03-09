@@ -20,6 +20,9 @@ router.get('/categories/:id', category_controller.category_detail_get)
 // GET category creation page
 router.get('/create/category', category_controller.category_create_get)
 
+// POST category creation page
+router.post('/create/category', category_controller.category_create_post)
+
 /* ITEMS */
 
 // GET items

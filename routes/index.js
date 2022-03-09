@@ -29,6 +29,12 @@ router.get('/categories/:id/delete', category_controller.category_delete_get)
 // POST category delete page
 router.post('/categories/:id/delete', category_controller.category_delete_post)
 
+// GET category delete page
+router.get('/categories/:id/update', category_controller.category_update_get)
+
+// GET category delete page
+router.post('/categories/:id/update', category_controller.category_update_post)
+
 /* ITEMS */
 
 // GET items

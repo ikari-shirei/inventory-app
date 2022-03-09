@@ -91,7 +91,7 @@ exports.category_delete_get = function (req, res, next) {
   })
 }
 
-// Get category delete
+// Post category delete
 exports.category_delete_post = function (req, res, next) {
   Category.findByIdAndRemove(req.params.id, function (err) {
     if (err) {
@@ -101,3 +101,51 @@ exports.category_delete_post = function (req, res, next) {
     res.redirect('/categories')
   })
 }
+
+// Get category update
+exports.category_update_get = function (req, res, next) {
+  Category.findById(req.params.id, function (err, category) {
+    if (err) {
+      return next(err)
+    }
+
+    res.render('category_form', { category: category })
+  })
+}
+
+// Post category update
+exports.category_update_post = [
+  body('name', 'Name must not be empty.').trim().isLength({ min: 1 }).escape(),
+  body('Description').optional({ checkFalsy: true }).escape(),
+
+  function (req, res, next) {
+    const errors = validationResult(req)
+
+    const category = new Category({
+      _id: req.params.id,
+      name: req.body.name,
+      description: req.body.description,
+    })
+
+    if (!errors.isEmpty()) {
+      res.render('category_form', {
+        category: category,
+        errors: errors.array(),
+      })
+      return
+    } else {
+      Category.findByIdAndUpdate(
+        req.params.id,
+        category,
+        {},
+        function (err, thecategory) {
+          if (err) {
+            return next(err)
+          }
+          // Category updated
+          res.redirect(category.url)
+        }
+      )
+    }
+  },
+]

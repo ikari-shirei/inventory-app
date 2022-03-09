@@ -3,6 +3,7 @@ extends layout
 block content
   h1 Do you really want to delete this item?
   hr
+  h1= item.name
   div
     div
       h2= 'Description: '
@@ -21,6 +22,8 @@ block content
     hr
     form(method="POST", action='' ) 
       button(type="submit") Yes
+    
+    button(onClick=`location.href='${item.url}'`) No
 
 
 

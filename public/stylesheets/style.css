@@ -13,3 +13,12 @@ a {
   justify-content: space-between;
   width: 300px;
 }
+
+button {
+  padding: 8px;
+  border-radius: 15px;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  width: 100px;
+  cursor: pointer;
+}

@@ -101,7 +101,8 @@ exports.item_create_post = [
     }
   },
 ]
-// this
+
+//Get item delete page
 exports.item_delete_get = function (req, res, next) {
   Item.findById(req.params.id)
     .populate('category')
@@ -113,4 +114,16 @@ exports.item_delete_get = function (req, res, next) {
       // Successful
       res.render('item_delete', { item: item })
     })
+}
+
+//Post item delete
+exports.item_delete_post = function (req, res, next) {
+  Item.findByIdAndRemove(req.params.id, function (err) {
+    if (err) {
+      return next(err)
+    }
+
+    // Item deleted
+    res.redirect('/items')
+  })
 }

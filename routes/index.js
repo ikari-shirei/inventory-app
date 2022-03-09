@@ -40,4 +40,7 @@ router.post('/create/item', item_controller.item_create_post)
 // GET item delete
 router.get('/items/:id/delete', item_controller.item_delete_get)
 
+// POST item delete
+router.post('/items/:id/delete', item_controller.item_delete_post)
+
 module.exports = router

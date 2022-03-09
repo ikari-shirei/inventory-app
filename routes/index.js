@@ -52,4 +52,7 @@ router.post('/items/:id/delete', item_controller.item_delete_post)
 // GET item update
 router.get('/items/:id/update', item_controller.item_update_get)
 
+// POST item update
+router.post('/items/:id/update', item_controller.item_update_post)
+
 module.exports = router

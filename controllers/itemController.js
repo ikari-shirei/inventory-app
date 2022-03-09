@@ -4,6 +4,7 @@ var async = require('async')
 
 const { body, validationResult } = require('express-validator')
 const item = require('../models/item')
+const { find } = require('../models/category')
 
 // Get categories list
 exports.item_list_get = function (req, res, next) {
@@ -129,7 +130,6 @@ exports.item_delete_post = function (req, res, next) {
 }
 
 //Get item update
-
 exports.item_update_get = function (req, res, next) {
   async.parallel(
     {
@@ -152,3 +152,63 @@ exports.item_update_get = function (req, res, next) {
     }
   )
 }
+
+//Post item update
+exports.item_update_post = [
+  body('name', 'Name must not be empty.').trim().isLength({ min: 1 }).escape(),
+  body('Description').optional({ checkFalsy: true }).escape(),
+  body('model', 'model must not be empty.')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body('year', 'year must not be empty.').trim().isLength({ min: 1 }).escape(),
+  body('category').escape(),
+  body('number_in_stock', 'number_in_stock must not be empty.')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body('price', 'price must not be empty.')
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  (req, res, next) => {
+    const errors = validationResult(req)
+
+    const item = new Item({
+      _id: req.params.id,
+      name: req.body.name,
+      description: req.body.description,
+      model: req.body.model,
+      year: req.body.year,
+      category: req.body.category,
+      number_in_stock: req.body.number_in_stock,
+      price: req.body.price,
+    })
+
+    if (!errors.isEmpty()) {
+      Category.find().exec(function (err, results) {
+        if (err) {
+          return next(err)
+        }
+
+        // Success
+        res.render('item_form', {
+          categories: results,
+          item: item,
+          errors: errors.array(),
+        })
+      })
+      return
+    } else {
+      Item.findByIdAndUpdate(req.params.id, item, {}, function (err, theitem) {
+        if (err) {
+          return next(err)
+        }
+
+        // Item updated
+        res.redirect(item.url)
+      })
+    }
+  },
+]

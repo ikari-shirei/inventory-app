@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1 Create new category
+  
+  div
+    form(method="POST", action='' ) 
+      div.form-div
+        label(for="name") Name:
+        input(id="name", name="name" required="true" value=(undefined===category ? '' : category.name))
+      div.form-div
+        label(for="description") Description:
+        input(id="description", name="description" value=(undefined===category ? '' : category.description))
+      button(type="submit") Submit
+
+
+    if errors 
+      ul
+        for error in errors
+          li= error.msg
+      
+
+

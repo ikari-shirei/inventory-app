@@ -39,3 +39,8 @@ exports.category_detail_get = function (req, res, next) {
     }
   )
 }
+
+// Get create category
+exports.category_create_get = function (req, res, next) {
+  res.render('category_form', {})
+}

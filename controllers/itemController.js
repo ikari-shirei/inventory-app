@@ -127,3 +127,28 @@ exports.item_delete_post = function (req, res, next) {
     res.redirect('/items')
   })
 }
+
+//Get item update
+
+exports.item_update_get = function (req, res, next) {
+  async.parallel(
+    {
+      item: function (callback) {
+        Item.findById(req.params.id).populate('category').exec(callback)
+      },
+      categories: function (callback) {
+        Category.find().exec(callback)
+      },
+    },
+    function (err, results) {
+      if (err) {
+        return next(err)
+      }
+
+      res.render('item_form', {
+        item: results.item,
+        categories: results.categories,
+      })
+    }
+  )
+}

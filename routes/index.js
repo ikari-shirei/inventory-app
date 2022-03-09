@@ -23,6 +23,9 @@ router.get('/create/category', category_controller.category_create_get)
 // POST category creation page
 router.post('/create/category', category_controller.category_create_post)
 
+// Get category delete page
+router.get('/categories/:id/delete', category_controller.category_delete_get)
+
 /* ITEMS */
 
 // GET items

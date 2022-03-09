@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1 Do you really want to delete this category?
+  hr
+  h1= category.name
+  div
+    h2= 'Description: '
+    p= category.description || 'This item has no description'
+  
+  div
+    hr
+    form(method="POST", action='' ) 
+      button(type="submit") Yes
+    
+    button(onClick=`location.href='${category.url}'`) No
+
+
+

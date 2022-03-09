@@ -79,3 +79,14 @@ exports.category_create_post = [
     }
   },
 ]
+
+// Get category delete
+exports.category_delete_get = function (req, res, next) {
+  Category.findById(req.params.id, function (err, category) {
+    if (err) {
+      return next(err)
+    }
+
+    res.render('category_delete', { category: category })
+  })
+}

@@ -27,3 +27,18 @@ exports.item_detail_get = function (req, res, next) {
       res.render('item_detail_get', { item: result })
     })
 }
+
+//Get item creation page
+exports.item_create_get = function (req, res, next) {
+  Category.find().exec(function (err, results) {
+    if (err) {
+      return next(err)
+    }
+
+    // Success
+    res.render('item_form', { categories: results })
+  })
+}
+
+//Get item creation page
+exports.item_create_post = function (req, res, next) {}

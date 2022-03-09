@@ -20,9 +20,12 @@ block content
       div.form-div
         label(for="category") Category:
         select(type='category' placeholder='Select category' name='category' required='true' style="min-width: 149px" )
-          if categories
+          if categories && item
             for category in categories
               option(value=category._id selected=(item.category._id.toString()==category._id.toString() ? 'selected' : false)) #{category.name}
+          else if categories
+            for category in categories
+              option(value=category._id) #{category.name}
       div.form-div
         label(for="number_in_stock") Number In Stock:
         input(id="number_in_stock", name="number_in_stock" value=(undefined===item ? '' : item.number_in_stock))

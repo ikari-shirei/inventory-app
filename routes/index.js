@@ -37,4 +37,7 @@ router.get('/create/item', item_controller.item_create_get)
 // POST item creation page
 router.post('/create/item', item_controller.item_create_post)
 
+// GET item delete
+router.get('/items/:id/delete', item_controller.item_delete_get)
+
 module.exports = router

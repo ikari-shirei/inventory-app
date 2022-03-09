@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  h1= item.year + ' ' + item.name + ' ' + item.model
+  h1 Do you really want to delete this item?
   hr
   div
     div
@@ -16,12 +16,11 @@ block content
     div
       h2= 'Price: ' 
       p= '$' + item.price
+  
+  div
+    hr
+    form(method="POST", action='' ) 
+      button(type="submit") Yes
 
-  div
-      h4 
-        a(href=item.url + '/delete' style='color: red') Delete item
-    
-  div
-      h4 
-        a(href='/') Go home
-      
+
+

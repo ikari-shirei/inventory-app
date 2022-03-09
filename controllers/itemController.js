@@ -3,6 +3,7 @@ var Item = require('../models/item')
 var async = require('async')
 
 const { body, validationResult } = require('express-validator')
+const item = require('../models/item')
 
 // Get categories list
 exports.item_list_get = function (req, res, next) {
@@ -100,3 +101,16 @@ exports.item_create_post = [
     }
   },
 ]
+// this
+exports.item_delete_get = function (req, res, next) {
+  Item.findById(req.params.id)
+    .populate('category')
+    .exec(function (err, item) {
+      if (err) {
+        return next(err)
+      }
+
+      // Successful
+      res.render('item_delete', { item: item })
+    })
+}
